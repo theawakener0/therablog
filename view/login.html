@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Sign In - TheraBlog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js" integrity="sha384-Akqfrbj/HpNVo8k11SXBb6TlBWmXXlYQrCSqEWmyKJe+hDm3Z/B2WVG4smwBkRVm" crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -12,65 +15,121 @@
             theme: {
                 extend: {
                     colors: {
-                        'cyan': {
-                            400: '#22d3ee',
-                            500: '#06b6d4',
+                        'sage': {
+                            50: '#f6f7f6',
+                            100: '#e3e7e3',
+                            200: '#c7cfc7',
+                            300: '#a3aea3',
+                            400: '#7d8c7d',
+                            500: '#5f6f5f',
+                            600: '#4a5a4a',
+                            700: '#3d4a3d',
+                            800: '#333d33',
+                            900: '#2b332b',
                         },
+                        'cream': {
+                            50: '#fdfcfb',
+                            100: '#faf8f5',
+                            200: '#f5f1ea',
+                            300: '#ebe4d7',
+                            400: '#ddd2bf',
+                        },
+                        'lavender': {
+                            50: '#f7f5fb',
+                            100: '#ede8f5',
+                            200: '#ddd5eb',
+                            300: '#c5b5db',
+                            400: '#a990c7',
+                            500: '#8f6fb0',
+                        },
+                    },
+                    fontFamily: {
+                        'serif': ['Cormorant Garamond', 'serif'],
+                        'sans': ['Montserrat', 'sans-serif'],
                     },
                 },
             },
         }
     </script>
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
 </head>
-<body class="bg-gray-950 text-white">
+<body class="bg-gradient-to-br from-cream-50 via-cream-100 to-lavender-50 dark:from-gray-900 dark:via-gray-800 dark:to-sage-900 text-sage-800 dark:text-cream-100 font-sans transition-colors duration-500">
 
-    <nav class="bg-gray-800 shadow-lg border-b border-gray-700">
-        <div class="container mx-auto px-4 py-4">
+    <nav class="bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-lg border-b border-sage-200 dark:border-sage-700 transition-all duration-300">
+        <div class="container mx-auto px-6 py-5">
             <div class="flex items-center justify-between">
-                <a class="flex items-center text-white font-bold text-3xl" href="/">
-                    <i class="bi bi-book text-cyan-400 mr-2"></i>Blog
-                </a>
-                
-                <button class="md:hidden text-white focus:outline-none" type="button" data-collapse-target="#navbarSupportedContent4" aria-controls="navbarSupportedContent4" aria-expanded="false" aria-label="Toggle navigation">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                <a class="flex items-center text-sage-700 dark:text-cream-100 font-serif font-semibold text-3xl hover:text-sage-600 dark:hover:text-lavender-300 transition-colors group" href="/">
+                    <svg class="w-8 h-8 mr-3 text-lavender-400 dark:text-lavender-300 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                     </svg>
-                </button>
+                    <span class="bg-gradient-to-r from-sage-600 to-lavender-500 dark:from-lavender-300 dark:to-sage-300 bg-clip-text text-transparent">TheraBlog</span>
+                </a>
+                <div class="flex items-center space-x-4">
+                    <a class="text-sage-600 dark:text-cream-200 font-medium hover:text-lavender-500 dark:hover:text-lavender-400 transition-colors" href="/register.html">Create Account</a>
+                </div>
             </div>
         </div>
     </nav>
 
-    <div class="container mx-auto px-4 my-8">
+    <div class="container mx-auto px-6 py-16">
         <div class="flex justify-center">
-            <div class="w-full md:w-6/12 lg:w-4/12">
-                <div class="bg-gray-800 rounded-lg p-8 shadow-lg border border-gray-700">
-                    <h2 class="text-center text-3xl md:text-4xl font-extrabold mb-4">Login to your account</h2>
+            <div class="w-full md:w-6/12 lg:w-4/12 max-w-md">
+                <div class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-lg rounded-3xl p-10 shadow-2xl dark:shadow-lavender-900/30 border border-sage-200 dark:border-sage-700">
+                    <h2 class="text-center text-4xl md:text-5xl font-serif font-light text-sage-700 dark:text-cream-100 mb-8">Welcome Back</h2>
                     
                     <form hx-post="/login/"
-                        hx-on::after-request="this.reset(); alert('Login successful');"
+                        hx-on::after-request="this.reset();"
                         class="mb-6">
 
-                        <div class="mb-4">
-                            <label for="username" class="block text-sm font-medium text-gray-400 mb-2">User</label>
-                            <input type="text" class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-400" id="username" name="username" required>
-                        </div>
                         <div class="mb-6">
-                            <label for="password" class="block text-sm font-medium text-gray-400 mb-2">Password</label>
-                            <input type="password" class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-400" id="password" name="password" required>
+                            <label for="username" class="block text-sm font-medium text-sage-600 dark:text-cream-200 mb-2">Username</label>
+                            <input type="text" class="w-full px-4 py-3 rounded-xl bg-cream-50 dark:bg-gray-900 border border-sage-200 dark:border-sage-600 text-sage-800 dark:text-cream-100 placeholder-sage-400 dark:placeholder-sage-500 focus:outline-none focus:ring-2 focus:ring-lavender-300 dark:focus:ring-lavender-500 focus:border-transparent transition-all" id="username" name="username" placeholder="Enter your username" required>
                         </div>
-                        <button type="submit" class="w-full bg-cyan-400 text-gray-900 font-bold rounded-full px-6 py-3 shadow-md hover:bg-cyan-500 transition-colors duration-200">
-                            Log In
+                        <div class="mb-8">
+                            <label for="password" class="block text-sm font-medium text-sage-600 dark:text-cream-200 mb-2">Password</label>
+                            <input type="password" class="w-full px-4 py-3 rounded-xl bg-cream-50 dark:bg-gray-900 border border-sage-200 dark:border-sage-600 text-sage-800 dark:text-cream-100 placeholder-sage-400 dark:placeholder-sage-500 focus:outline-none focus:ring-2 focus:ring-lavender-300 dark:focus:ring-lavender-500 focus:border-transparent transition-all" id="password" name="password" placeholder="Enter your password" required>
+                        </div>
+                        <button type="submit" class="w-full bg-gradient-to-r from-sage-500 to-lavender-500 dark:from-lavender-600 dark:to-sage-600 text-white font-medium rounded-full px-6 py-3.5 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                            Sign In
                         </button>
                     </form>
 
                     <div class="text-center">
-                        <p class="text-gray-400">
-                            Don't have an account? <a href="/register.html" class="text-cyan-400 hover:underline">Sign up here</a>
+                        <p class="text-sage-600 dark:text-cream-200">
+                            New here? <a href="/register.html" class="text-lavender-500 dark:text-lavender-400 hover:text-lavender-600 dark:hover:text-lavender-300 font-medium underline decoration-lavender-300 underline-offset-4 transition-colors">Create an account</a>
                         </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Theme Toggle Button -->
+    <button onclick="toggleTheme()" class="fixed bottom-6 right-6 bg-gradient-to-br from-sage-500 to-sage-600 dark:from-lavender-500 dark:to-lavender-600 text-white p-4 rounded-full shadow-2xl hover:shadow-lavender-500/50 dark:hover:shadow-sage-500/50 hover:scale-110 hover:rotate-12 transition-all duration-300 z-50 group">
+        <svg class="w-6 h-6 block dark:hidden group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+        </svg>
+        <svg class="w-6 h-6 hidden dark:block group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+        </svg>
+    </button>
+
+    <script>
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        }
+    </script>
 </body>
 </html>

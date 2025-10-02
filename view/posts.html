@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTMX Blog</title>
+    <title>Reflections - TheraBlog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js" integrity="sha384-Akqfrbj/HpNVo8k11SXBb6TlBWmXXlYQrCSqEWmyKJe+hDm3Z/B2WVG4smwBkRVm" crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -12,64 +15,115 @@
             theme: {
                 extend: {
                     colors: {
-                        'cyan': {
-                            400: '#22d3ee',
-                            500: '#06b6d4',
+                        'sage': {
+                            50: '#f6f7f6', 100: '#e3e7e3', 200: '#c7cfc7', 300: '#a3aea3',
+                            400: '#7d8c7d', 500: '#5f6f5f', 600: '#4a5a4a', 700: '#3d4a3d',
+                            800: '#333d33', 900: '#2b332b',
+                        },
+                        'cream': {
+                            50: '#fdfcfb', 100: '#faf8f5', 200: '#f5f1ea', 300: '#ebe4d7', 400: '#ddd2bf',
+                        },
+                        'lavender': {
+                            50: '#f7f5fb', 100: '#ede8f5', 200: '#ddd5eb', 300: '#c5b5db', 400: '#a990c7', 500: '#8f6fb0',
+                        },
+                    },
+                    fontFamily: {
+                        'serif': ['Cormorant Garamond', 'serif'],
+                        'sans': ['Montserrat', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
                         },
                     },
                 },
             },
         }
     </script>
+    <script>
+        // Dark mode initialization
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+    </style>
 </head>
-<body class="bg-gray-950 text-white">
+<body class="bg-gradient-to-br from-cream-50 via-cream-100 to-lavender-50 dark:from-gray-900 dark:via-gray-800 dark:to-sage-900 text-sage-800 dark:text-cream-100 font-sans transition-colors duration-500">
 
 
-    <nav class="bg-gray-800 shadow-lg border-b border-gray-700">
-        <div class="container mx-auto px-4 py-4">
+    <nav class="bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-lg border-b border-sage-200 dark:border-sage-700 sticky top-0 z-40 transition-all duration-300">
+        <div class="container mx-auto px-6 py-5">
             <div class="flex items-center justify-between">
-                <a class="flex items-center text-white font-bold text-3xl" href="/">
-                    <i class="bi bi-book text-cyan-400 mr-2"></i>Blog
+                <a class="flex items-center text-sage-700 dark:text-cream-100 font-serif font-semibold text-3xl hover:text-sage-600 dark:hover:text-lavender-300 transition-colors group" href="/">
+                    <svg class="w-8 h-8 mr-3 text-lavender-400 dark:text-lavender-300 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    </svg>
+                    <span class="bg-gradient-to-r from-sage-600 to-lavender-500 dark:from-lavender-300 dark:to-sage-300 bg-clip-text text-transparent">TheraBlog</span>
                 </a>
                 
-                <button class="md:hidden text-white focus:outline-none" type="button" data-collapse-target="#navbarSupportedContent4" aria-controls="navbarSupportedContent4" aria-expanded="false" aria-label="Toggle navigation">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                    </svg>
-                </button>
-                
-                <div class="hidden md:flex flex-grow items-center justify-end" id="navbarSupportedContent4">
-                    <ul class="flex flex-col md:flex-row md:space-x-4">
+                <div class="hidden md:flex flex-grow items-center justify-end gap-2">
+                    <ul class="flex flex-col md:flex-row md:space-x-3 items-center">
                         <li class="mb-2 md:mb-0">
-                            <a class="flex items-center bg-cyan-400 text-gray-900 rounded-full px-4 py-2 font-bold shadow-md hover:bg-cyan-500 transition-colors duration-200" href="/posts.html" aria-current="page">
-                                <i class="bi bi-postcard mr-2"></i>Posts
+                            <a class="flex items-center bg-gradient-to-r from-sage-500 to-sage-600 dark:from-sage-600 dark:to-sage-700 text-white rounded-full px-5 py-2.5 font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300" href="/posts.html">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                                </svg>
+                                Reflections
                             </a>
                         </li>
                         <li class="mb-2 md:mb-0">
-                            <a class="flex items-center bg-cyan-400 text-gray-900 rounded-full px-4 py-2 font-bold shadow-md hover:bg-cyan-500 transition-colors duration-200" href="/videos.html" aria-current="page">
-                                <i class="bi bi-postcard mr-2"></i>Videos
+                            <a class="flex items-center text-sage-700 dark:text-cream-200 font-medium rounded-full px-5 py-2.5 border-2 border-sage-300 dark:border-sage-600 hover:bg-sage-50 dark:hover:bg-sage-800 hover:border-sage-400 dark:hover:border-sage-500 hover:scale-105 transition-all duration-300" href="/videos.html">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                </svg>
+                                Videos
                             </a>
                         </li>
                         <li>
-                            <a class="flex items-center text-white font-semibold rounded-full px-4 py-2 border-2 border-cyan-400 hover:bg-cyan-400 hover:text-gray-900 transition-colors duration-200" href="/create-posts.html">
-                                <i class="bi bi-file-plus mr-2"></i>Create Post
+                            <a class="flex items-center text-sage-700 dark:text-cream-200 font-medium rounded-full px-5 py-2.5 border-2 border-sage-300 dark:border-sage-600 hover:bg-sage-50 dark:hover:bg-sage-800 hover:border-sage-400 dark:hover:border-sage-500 hover:scale-105 transition-all duration-300" href="/create-posts.html">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                </svg>
+                                Write
                             </a>
                         </li>
                         <li>
-                            <a class="flex items-center text-white font-semibold rounded-full px-4 py-2 border-2 border-cyan-400 hover:bg-cyan-400 hover:text-gray-900 transition-colors duration-200" href="/create-videos.html">
-                                <i class="bi bi-file-plus mr-2"></i>Create Video
+                            <a class="flex items-center text-sage-700 dark:text-cream-200 font-medium rounded-full px-5 py-2.5 border-2 border-sage-300 dark:border-sage-600 hover:bg-sage-50 dark:hover:bg-sage-800 hover:border-sage-400 dark:hover:border-sage-500 hover:scale-105 transition-all duration-300" href="/create-videos.html">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                </svg>
+                                Add Video
                             </a>
                         </li>
                         {{ if .IsAuth }}    
                         <li>
-                            <button class="flex items-center text-white font-semibold rounded-full px-4 py-2 border-2 border-cyan-400 hover:bg-cyan-400 hover:text-gray-900 transition-colors duration-200" hx-post="/logout/" hx-trigger="click">
+                            <button class="flex items-center text-sage-600 dark:text-sage-400 font-medium rounded-full px-5 py-2.5 border-2 border-sage-200 dark:border-sage-700 hover:bg-sage-50 dark:hover:bg-sage-800 hover:text-sage-700 dark:hover:text-sage-300 hover:scale-105 transition-all duration-300" hx-post="/logout/" hx-trigger="click">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                                </svg>
                                 Logout
                             </button>
                         </li>
                         {{ else }}
                         <li>
-                            <a class="flex items-center text-white font-semibold rounded-full px-4 py-2 border-2 border-cyan-400 hover:bg-cyan-400 hover:text-gray-900 transition-colors duration-200" href="/login.html">
-                                Login
+                            <a class="flex items-center bg-gradient-to-r from-lavender-400 to-lavender-500 dark:from-lavender-500 dark:to-lavender-600 text-white font-medium rounded-full px-5 py-2.5 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300" href="/login.html">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
+                                </svg>
+                                Sign In
                             </a>
                         </li>
                         {{ end }}
@@ -78,34 +132,87 @@
             </div>
         </div>
     </nav>
-    <div class="container mx-auto px-4 my-8">
+    <div class="container mx-auto px-4 py-12">
         <div class="flex justify-center">
             <div class="w-full md:w-10/12 lg:w-8/12">
-                <h1 class="text-4xl md:text-5xl font-extrabold mb-3">HTMX Blog</h1>
-                <p class="text-gray-400 mb-4">Go to the <a href="/" class="text-blue-500 hover:underline">main page</a>.</p>
-                <hr class="my-8 border-gray-700">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">All Posts</h2>
-                <div id="blog-posts-container">
+                <div class="text-center mb-12 animate-fade-in">
+                    <h1 class="text-5xl md:text-6xl font-serif font-bold mb-4 bg-gradient-to-r from-sage-700 via-lavender-600 to-sage-700 dark:from-sage-300 dark:via-lavender-300 dark:to-sage-300 bg-clip-text text-transparent">
+                        Your Reflections
+                    </h1>
+                    <p class="text-lg text-sage-600 dark:text-cream-200 font-light">
+                        A collection of thoughts and moments. <a href="/" class="text-lavender-600 dark:text-lavender-400 hover:underline font-medium">Return home</a>
+                    </p>
+                </div>
+                
+                <div class="border-t-2 border-dashed border-sage-300 dark:border-sage-600 my-8"></div>
+                
+                <h2 class="text-3xl md:text-4xl font-serif font-bold mb-8 text-sage-800 dark:text-cream-100 animate-slide-up">
+                    All Posts
+                </h2>
+                
+                <div id="blog-posts-container" class="space-y-6">
                     {{ range .Posts.Posts }}
-                        <article class="bg-gray-800 rounded-lg p-6 mb-4 shadow-md">
-                            <h3 class="text-2xl font-semibold mb-2">{{ .Title }}</h3>
-                            <p class="text-gray-500 text-sm mb-4">{{ .Date }}</p>
-                            <div class="flex space-x-2 mb-4">
+                        <article class="group bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg rounded-3xl p-8 shadow-xl hover:shadow-2xl dark:shadow-lavender-900/30 transition-all duration-500 hover:-translate-y-2 border border-sage-200 dark:border-sage-700 animate-slide-up">
+                            <h3 class="text-3xl font-serif font-semibold mb-3 text-sage-800 dark:text-cream-100 group-hover:text-lavender-600 dark:group-hover:text-lavender-400 transition-colors duration-300">
+                                {{ .Title }}
+                            </h3>
+                            <p class="text-sage-500 dark:text-sage-400 text-sm mb-5 flex items-center">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                                {{ .Date }}
+                            </p>
+                            <div class="prose prose-sage dark:prose-invert max-w-none">
+                                <p class="text-sage-700 dark:text-cream-200 leading-relaxed">{{ .Content }}</p>
                             </div>
-                            <div class="text-gray-300">
-                                <p>{{ .Content }}</p>
+                            <div class="mt-6 pt-6 border-t border-sage-200 dark:border-sage-700">
+                                <div class="flex items-center text-sage-600 dark:text-sage-400 text-sm group-hover:text-lavender-600 dark:group-hover:text-lavender-400 transition-colors duration-300">
+                                    <svg class="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                    </svg>
+                                    Shared with care
+                                </div>
                             </div>
                         </article>
                     {{ end }}
 
                     {{ if not .Posts.Posts }}
-                        <div class="bg-blue-900 bg-opacity-30 border border-blue-700 text-blue-300 text-center rounded-lg p-6" role="alert">
-                            <strong class="font-bold">No posts yet.</strong> Be the first to publish a new post!
+                        <div class="bg-gradient-to-br from-lavender-100 to-sage-100 dark:from-lavender-900/30 dark:to-sage-900/30 border-2 border-dashed border-lavender-300 dark:border-lavender-700 text-center rounded-3xl p-12 backdrop-blur-sm animate-fade-in" role="alert">
+                            <svg class="w-16 h-16 mx-auto mb-4 text-lavender-400 dark:text-lavender-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            <p class="text-xl font-serif font-semibold text-sage-800 dark:text-cream-100 mb-2">No posts yet</p>
+                            <p class="text-sage-600 dark:text-cream-200">Be the first to share your thoughts and reflections</p>
+                            <a href="/create-posts.html" class="inline-block mt-6 bg-gradient-to-r from-sage-500 to-lavender-500 text-white font-semibold rounded-full px-8 py-3 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                                Create Your First Post
+                            </a>
                         </div>
                     {{ end }}
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Theme Toggle Button -->
+    <button onclick="toggleTheme()" class="fixed bottom-6 right-6 bg-gradient-to-br from-sage-500 to-sage-600 dark:from-lavender-500 dark:to-lavender-600 text-white p-4 rounded-full shadow-2xl hover:shadow-lavender-500/50 dark:hover:shadow-sage-500/50 hover:scale-110 hover:rotate-12 transition-all duration-300 z-50 group">
+        <svg class="w-6 h-6 block dark:hidden group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+        </svg>
+        <svg class="w-6 h-6 hidden dark:block group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+        </svg>
+    </button>
+
+    <script>
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        }
+    </script>
 </body>
 </html>

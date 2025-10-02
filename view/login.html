@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js" integrity="sha384-Akqfrbj/HpNVo8k11SXBb6TlBWmXXlYQrCSqEWmyKJe+hDm3Z/B2WVG4smwBkRVm" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'cyan': {
+                            400: '#22d3ee',
+                            500: '#06b6d4',
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-gray-950 text-white">
+
+    <nav class="bg-gray-800 shadow-lg border-b border-gray-700">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <a class="flex items-center text-white font-bold text-3xl" href="/">
+                    <i class="bi bi-book text-cyan-400 mr-2"></i>Blog
+                </a>
+                
+                <button class="md:hidden text-white focus:outline-none" type="button" data-collapse-target="#navbarSupportedContent4" aria-controls="navbarSupportedContent4" aria-expanded="false" aria-label="Toggle navigation">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 my-8">
+        <div class="flex justify-center">
+            <div class="w-full md:w-6/12 lg:w-4/12">
+                <div class="bg-gray-800 rounded-lg p-8 shadow-lg border border-gray-700">
+                    <h2 class="text-center text-3xl md:text-4xl font-extrabold mb-4">Login to your account</h2>
+                    
+                    <form hx-post="/login/"
+                        hx-on::after-request="this.reset(); alert('Login successful');"
+                        class="mb-6">
+
+                        <div class="mb-4">
+                            <label for="username" class="block text-sm font-medium text-gray-400 mb-2">User</label>
+                            <input type="text" class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-400" id="username" name="username" required>
+                        </div>
+                        <div class="mb-6">
+                            <label for="password" class="block text-sm font-medium text-gray-400 mb-2">Password</label>
+                            <input type="password" class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-400" id="password" name="password" required>
+                        </div>
+                        <button type="submit" class="w-full bg-cyan-400 text-gray-900 font-bold rounded-full px-6 py-3 shadow-md hover:bg-cyan-500 transition-colors duration-200">
+                            Log In
+                        </button>
+                    </form>
+
+                    <div class="text-center">
+                        <p class="text-gray-400">
+                            Don't have an account? <a href="/register.html" class="text-cyan-400 hover:underline">Sign up here</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

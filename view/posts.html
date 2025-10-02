@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTMX Blog</title>
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js" integrity="sha384-Akqfrbj/HpNVo8k11SXBb6TlBWmXXlYQrCSqEWmyKJe+hDm3Z/B2WVG4smwBkRVm" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'cyan': {
+                            400: '#22d3ee',
+                            500: '#06b6d4',
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-gray-950 text-white">
+
+
+    <nav class="bg-gray-800 shadow-lg border-b border-gray-700">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <a class="flex items-center text-white font-bold text-3xl" href="/">
+                    <i class="bi bi-book text-cyan-400 mr-2"></i>Blog
+                </a>
+                
+                <button class="md:hidden text-white focus:outline-none" type="button" data-collapse-target="#navbarSupportedContent4" aria-controls="navbarSupportedContent4" aria-expanded="false" aria-label="Toggle navigation">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+                
+                <div class="hidden md:flex flex-grow items-center justify-end" id="navbarSupportedContent4">
+                    <ul class="flex flex-col md:flex-row md:space-x-4">
+                        <li class="mb-2 md:mb-0">
+                            <a class="flex items-center bg-cyan-400 text-gray-900 rounded-full px-4 py-2 font-bold shadow-md hover:bg-cyan-500 transition-colors duration-200" href="/posts.html" aria-current="page">
+                                <i class="bi bi-postcard mr-2"></i>Posts
+                            </a>
+                        </li>
+                        <li class="mb-2 md:mb-0">
+                            <a class="flex items-center bg-cyan-400 text-gray-900 rounded-full px-4 py-2 font-bold shadow-md hover:bg-cyan-500 transition-colors duration-200" href="/videos.html" aria-current="page">
+                                <i class="bi bi-postcard mr-2"></i>Videos
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center text-white font-semibold rounded-full px-4 py-2 border-2 border-cyan-400 hover:bg-cyan-400 hover:text-gray-900 transition-colors duration-200" href="/create-posts.html">
+                                <i class="bi bi-file-plus mr-2"></i>Create Post
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center text-white font-semibold rounded-full px-4 py-2 border-2 border-cyan-400 hover:bg-cyan-400 hover:text-gray-900 transition-colors duration-200" href="/create-videos.html">
+                                <i class="bi bi-file-plus mr-2"></i>Create Video
+                            </a>
+                        </li>
+                        {{ if .IsAuth }}    
+                        <li>
+                            <button class="flex items-center text-white font-semibold rounded-full px-4 py-2 border-2 border-cyan-400 hover:bg-cyan-400 hover:text-gray-900 transition-colors duration-200" hx-post="/logout/" hx-trigger="click">
+                                Logout
+                            </button>
+                        </li>
+                        {{ else }}
+                        <li>
+                            <a class="flex items-center text-white font-semibold rounded-full px-4 py-2 border-2 border-cyan-400 hover:bg-cyan-400 hover:text-gray-900 transition-colors duration-200" href="/login.html">
+                                Login
+                            </a>
+                        </li>
+                        {{ end }}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container mx-auto px-4 my-8">
+        <div class="flex justify-center">
+            <div class="w-full md:w-10/12 lg:w-8/12">
+                <h1 class="text-4xl md:text-5xl font-extrabold mb-3">HTMX Blog</h1>
+                <p class="text-gray-400 mb-4">Go to the <a href="/" class="text-blue-500 hover:underline">main page</a>.</p>
+                <hr class="my-8 border-gray-700">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">All Posts</h2>
+                <div id="blog-posts-container">
+                    {{ range .Posts.Posts }}
+                        <article class="bg-gray-800 rounded-lg p-6 mb-4 shadow-md">
+                            <h3 class="text-2xl font-semibold mb-2">{{ .Title }}</h3>
+                            <p class="text-gray-500 text-sm mb-4">{{ .Date }}</p>
+                            <div class="flex space-x-2 mb-4">
+                            </div>
+                            <div class="text-gray-300">
+                                <p>{{ .Content }}</p>
+                            </div>
+                        </article>
+                    {{ end }}
+
+                    {{ if not .Posts.Posts }}
+                        <div class="bg-blue-900 bg-opacity-30 border border-blue-700 text-blue-300 text-center rounded-lg p-6" role="alert">
+                            <strong class="font-bold">No posts yet.</strong> Be the first to publish a new post!
+                        </div>
+                    {{ end }}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
